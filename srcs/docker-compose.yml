@@ -1,0 +1,15 @@
+version: '3.8'
+services:
+  frontend:
+    build:
+      context: ./requirements/frontend
+      dockerfile: Dockerfile
+
+  nginx:
+    build:
+      context: ./requirements/nginx
+      dockerfile: Dockerfile
+    ports:
+      - "1505:1505"
+    depends_on:
+      - frontend
