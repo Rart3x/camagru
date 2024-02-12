@@ -31,6 +31,8 @@ services:
     networks:
       - camagru
     restart: on-failure
+    volumes:
+      - shared_datas:/usr/share/nginx/html
 
   nginx:
     container_name: nginx
@@ -44,8 +46,10 @@ services:
     networks:
       - camagru
     ports:
-      - "1505:1505"
+      - "1505:80"
     restart: on-failure
+    volumes:
+      - shared_datas:/usr/share/nginx/html
 
   postgres:
     container_name: postgres
@@ -81,4 +85,6 @@ volumes:
   adminer_data:
     driver: local
   postgres_data:
+    driver: local
+  shared_datas:
     driver: local
