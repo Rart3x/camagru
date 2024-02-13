@@ -1,25 +1,21 @@
 version: '3.8'
 services:
-  adminer:
-    container_name: adminer
-    hostname: adminer
-    image: adminer
+  backend:
+    container_name: backend
+    hostname: backend
+    image: backend
     build:
-      context: ./requirements/adminer
+      context: ./requirements/backend
       dockerfile: Dockerfile
     depends_on:
-      - postgres
-    environment:
-      ADMINER_DEFAULT_SERVER: postgres
-      ADMINER_DEFAULT_USERNAME: ${POSTGRES_USER}
-      ADMINER_DEFAULT_PASSWORD: ${POSTGRES_PASSWORD}
+      - db
     networks:
       - camagru
     ports:
-      - "8080:8080"
+      - "3000:3000"
     restart: on-failure
     volumes:
-      - adminer_data:/var/www/html
+      - shared_datas:/usr/share/nginx/html
 
   frontend:
     container_name: frontend
@@ -51,40 +47,55 @@ services:
     volumes:
       - shared_datas:/usr/share/nginx/html
 
-  postgres:
-    container_name: postgres
-    hostname: postgres
-    image: postgres
+#------------------------------DATABASE------------------------------#
+  db:
+    container_name: db
+    hostname: db
+    image: db
     build:
-      context: ./requirements/postgres
+      context: ./requirements/db
       dockerfile: Dockerfile
-    env_file: .env
     environment:
-      POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-      POSTGRES_DB: ${POSTGRES_DB}
-      POSTGRES_HOST: ${POSTGRES_HOST}
-    healthcheck:
-      test: ["CMD", "pg_isready"]
-      interval: 5s
-      timeout: 5s
-      retries: 5
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: admin
+      MYSQL_DATABASE: camagru
+      MYSQL_ALLOW_EMPTY_PASSWORD: 1
+    networks:
+      - camagru
+    restart: on-failure
+    volumes:
+      - db_data:/var/lib/db/data
+
+  phpmyadmin:
+    container_name: phpmyadmin
+    hostname: phpmyadmin
+    image: phpmyadmin
+    build:
+      context: ./requirements/phpmyadmin
+      dockerfile: Dockerfile
+    depends_on:
+      - db
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
     networks:
       - camagru
     ports:
-      - "5432:5432"
+      - "5555:80"
     restart: on-failure
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - phpmyadmin_data:/var/www/html
 
+#------------------------------NETWORKS------------------------------#
 networks:
   camagru:
     driver: bridge
 
+#------------------------------VOLUMES------------------------------#
 volumes:
-  adminer_data:
+  phpmyadmin_data:
     driver: local
-  postgres_data:
+  db_data:
     driver: local
   shared_datas:
     driver: local

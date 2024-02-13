@@ -4,18 +4,19 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        <link href="style/index.css" rel="stylesheet">
+        <link href="../style/register.css" rel="stylesheet">
+        <script src="../js/register.js"></script>
 
         <title>Camagru</title>
         
         <!--Header-->
         <nav class="header">
             <div class="header-logo">
-                <img src="assets/logo.png" alt="logo">
+                <!-- <img src="assets/logo.png" alt="logo"> -->
             </div>
             <div class="header-search">
                 <input type="text" placeholder="Search...">
-                <button type="submit"><img src="assets/search.png" alt="search"></button>
+                <button type="button">Register</button>
             </div>
         </nav>
 
@@ -36,7 +37,11 @@
             <!--Main Left content-->
             <div class="center">
                 <nav class="header-center">
-                    <h1>Welcome to Camagru</h1>
+                    <form id="register">
+                        <input type="text" placeholder="Username">
+                        <input type="text" placeholder="Email">
+                        <button type="submit">Register</button>
+                    </form>
                 </nav>
             </div>
             <!--Right Left content-->
