@@ -2,3 +2,46 @@
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
 @import 'daisyui/dist/full.css';
+
+.align-center { text-align: center; border: 1px solid #ffffff }
+
+body, html {
+    width:  100%; height:  90%;
+    margin:  0; border: 1px solid #000000
+}
+
+input[type="text"] {
+    border-radius:  10px;
+    padding:  5px  10px;
+}
+  
+.center-part {
+    width:  50%; height:  90%;
+    float: left; border: 1px solid #ffffff;
+}
+
+.center-part-header {
+    border: 1px solid #ffffff;
+}
+
+.center-part-header-left {
+    text-align: left; display: inline-block;
+}
+
+.center-part-header-right {
+    text-align: right; display: inline-block;
+}
+
+.center-part-header-center {
+    text-align: center; display: inline-block;
+}
+  
+.left-part {
+    width:  25%; height:  90%;
+    float: left; border: 1px solid #ffffff;
+}
+  
+.right-part {
+    width:  25%; height:  90%;
+    float: left;  border: 1px solid #ffffff;
+}
