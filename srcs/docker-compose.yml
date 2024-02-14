@@ -1,35 +1,5 @@
 version: '3.8'
 services:
-  backend:
-    container_name: backend
-    hostname: backend
-    image: backend
-    build:
-      context: ./requirements/backend
-      dockerfile: Dockerfile
-    depends_on:
-      - db
-    networks:
-      - camagru
-    ports:
-      - "3000:3000"
-    restart: on-failure
-    volumes:
-      - shared_datas:/usr/share/nginx/html
-
-  frontend:
-    container_name: frontend
-    hostname: frontend
-    image: frontend
-    build:
-      context: ./requirements/frontend
-      dockerfile: Dockerfile
-    networks:
-      - camagru
-    restart: on-failure
-    volumes:
-      - shared_datas:/usr/share/nginx/html
-
   nginx:
     container_name: nginx
     hostname: nginx
@@ -38,11 +8,24 @@ services:
       context: ./requirements/nginx
       dockerfile: Dockerfile
     depends_on:
-      - frontend
+      - web
     networks:
       - camagru
     ports:
-      - "1505:80"
+      - "1506:80"
+    restart: on-failure
+    volumes:
+      - shared_datas:/usr/share/nginx/html
+    
+  web:
+    container_name: web
+    hostname: web
+    image: web
+    build:
+      context: ./requirements/web
+      dockerfile: Dockerfile
+    networks:
+      - camagru
     restart: on-failure
     volumes:
       - shared_datas:/usr/share/nginx/html
@@ -93,9 +76,9 @@ networks:
 
 #------------------------------VOLUMES------------------------------#
 volumes:
-  phpmyadmin_data:
-    driver: local
   db_data:
+    driver: local
+  phpmyadmin_data:
     driver: local
   shared_datas:
     driver: local

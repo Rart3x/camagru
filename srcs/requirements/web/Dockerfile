@@ -1,5 +1,7 @@
 FROM php:latest
 
+COPY ./srcs /usr/share/nginx/html
+
 RUN apt-get update \
     && apt-get install -y apache2 \
     && apt-get clean \
@@ -16,9 +18,7 @@ ENV APACHE_RUN_DIR=/var/run/apache2 \
 RUN a2enmod rewrite
 
 RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
-COPY ./conf/apache-config.conf /etc/apache2/sites-available/000-default.conf
-
-COPY ./app/ /var/www/html
+COPY ./srcs/config/apache-config.conf /etc/apache2/sites-available/000-default.conf
 
 EXPOSE  80
 
