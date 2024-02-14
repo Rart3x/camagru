@@ -1,22 +1,5 @@
 version: '3.8'
 services:
-  nginx:
-    container_name: nginx
-    hostname: nginx
-    image: nginx
-    build:
-      context: ./requirements/nginx
-      dockerfile: Dockerfile
-    depends_on:
-      - web
-    networks:
-      - camagru
-    ports:
-      - "1506:80"
-    restart: on-failure
-    volumes:
-      - shared_datas:/usr/share/nginx/html
-    
   web:
     container_name: web
     hostname: web
@@ -24,11 +7,11 @@ services:
     build:
       context: ./requirements/web
       dockerfile: Dockerfile
+    ports:
+      - "1505:80"
     networks:
       - camagru
     restart: on-failure
-    volumes:
-      - shared_datas:/usr/share/nginx/html
 
 #------------------------------DATABASE------------------------------#
   db:
@@ -79,6 +62,4 @@ volumes:
   db_data:
     driver: local
   phpmyadmin_data:
-    driver: local
-  shared_datas:
     driver: local
