@@ -13,14 +13,73 @@
             }
         }
 
-        public function error() {
-            return $this->_error;
-        }
-
         public static function getInstance() {
             if (!isset(self::$_instance))
                 self::$_instance = new DB();
             return self::$_instance;
+        }
+
+        public function error() {
+            return $this->_error;
+        }
+
+        public function action($action, $table, $where = []) {
+            if (count($where) === 3) {
+                $operators = ['=', '>', '<', '>=', '<='];
+                $field = $where[0];
+                $operator = $where[1];
+                $value = $where[2];
+                if (in_array($operator, $operators)) {
+                    $sql = "{$action} FROM {$table} WHERE {$field} {$operator} ?";
+                    if (!$this->query($sql, [$value])->error())
+                        return $this;
+                }
+            }
+            return false;
+        }
+
+        public function delete($table, $id) {
+            $sql = "DELETE FROM {$table} WHERE id = {$id}";
+            if (!$this->query($sql)->error())
+                return true;
+            return false;
+        }
+
+        public function first() {
+            return $this->results()[0];
+        }
+
+        public function count() {
+            return $this->_count;
+        }
+
+        public function get_columns($table) {
+            return $this->query("SHOW COLUMNS FROM {$table}")->results();
+        }
+
+        public function get($table, $where) {
+            return $this->action('SELECT *', $table, $where);
+        }
+
+        public function insert($table, $fields = []) {
+            $fieldString = '';
+            $valueString = '';
+            $values = [];
+            foreach ($fields as $field => $value) {
+                $fieldString .= '`' . $field . '`,';
+                $valueString .= '?,';
+                $values[] = $value;
+            }
+            $fieldString = rtrim($fieldString, ',');
+            $valueString = rtrim($valueString, ',');
+            $sql = "INSERT INTO {$table} ({$fieldString}) VALUES ({$valueString})";
+            if (!$this->query($sql, $values)->error())
+                return true;
+            return false;
+        }
+
+        public function lastID() {
+            return $this->_lastInsertID;
         }
 
         public function query($sql, $params = []) {
@@ -43,21 +102,8 @@
             return $this;
         }
 
-        public function insert($table, $fields = []) {
-            $fieldString = '';
-            $valueString = '';
-            $values = [];
-            foreach ($fields as $field => $value) {
-                $fieldString .= '`' . $field . '`,';
-                $valueString .= '?,';
-                $values[] = $value;
-            }
-            $fieldString = rtrim($fieldString, ',');
-            $valueString = rtrim($valueString, ',');
-            $sql = "INSERT INTO {$table} ({$fieldString}) VALUES ({$valueString})";
-            if (!$this->query($sql, $values)->error())
-                return true;
-            return false;
+        public function results() {
+            return $this->_results;
         }
 
         public function update($table, $id, $fields = []) {
@@ -74,13 +120,4 @@
                 return true;
             return false;
         }
-
-        public function delete($table, $id) {
-            $sql = "DELETE FROM {$table} WHERE id = {$id}";
-            if (!$this->query($sql)->error())
-                return true;
-            return false;
-        }
-
-
     }
