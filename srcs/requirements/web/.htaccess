@@ -1,11 +1,8 @@
 RewriteEngine On
 
-RewriteCond %{REQUEST_URI} !^/pages/
-
-RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^(.*)$ / [QSA,L]
+RewriteCond %{REQUEST_FILENAME} !-f
 
-<FilesMatch "\.ph(ar|p|tml)$">
-    SetHandler application/x-httpd-php
-</FilesMatch>
+RewriteCond $1 !^(config|core|js|style|robots\.txt)
+
+RewriteRule ^(.+)$ index.php/$1 [L]

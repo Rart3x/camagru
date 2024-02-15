@@ -4,22 +4,14 @@
     define('DS', DIRECTORY_SEPARATOR);
     define('ROOT', dirname(__FILE__));
 
-    $url = isset($_SERVER['PATH_INFO']) ? explode('/', ltrim($_SERVER['PATH_INFO'], '/')) : [];
-    
-    require_once(ROOT . DS . 'core' . DS . 'Router.php');
-    require_once(ROOT . DS . 'core' . DS . 'boostrap.php');
-    require_once(ROOT . DS . 'core' . DS . 'DB.php');
+    $url = isset($_SERVER['REQUEST_URI']) ? explode('/', ltrim($_SERVER['REQUEST_URI'], '/')) : [];
 
-    $db = DB::getInstance();
-    $sql = "CREATE TABLE IF NOT EXISTS `test` (
-        `name` varchar(255) NOT NULL,
-        `age` int(11) NOT NULL
-    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;";
-    $db->query($sql);
-    $sql = "INSERT INTO `test` (`name`, `age`) VALUES ('dams', '22');";
-    $db->query($sql);
+    require_once(ROOT . DS . 'core' . DS . 'boostrap.php');
+
+    // $db = DB::getInstance();
 ?>
 
+<!-- 
 <!DOCTYPE html>
 <html data-theme="retro" lang="en">
     <head>
@@ -67,9 +59,9 @@
             <p>right</p>
         </div>
 
-         <!-- <footer class="bg-gray-800 text-white p-4">
+         <footer class="bg-gray-800 text-white p-4">
             <p class="text-center">&copy; Rart3x</p>
             <p>footer</p>
-        </footer> -->
+        </footer>
     </body>
-</html>
+</html> -->

@@ -1,10 +1,10 @@
 <?php
     define('DEBUG', false);
 
-    define('DEFAULT_CONTROLLER', "Home");
-    define('DEFAULT_LAYOUT', "default");
+    define('DEFAULT_CONTROLLER', 'Home');
+    define('DEFAULT_LAYOUT', 'default');
 
-    define('SITE_TITLE', "Camagru");
+    define('SITE_TITLE', 'Camagru');
     define('SROOT', '/');
 
     define('DB_HOST', 'db');

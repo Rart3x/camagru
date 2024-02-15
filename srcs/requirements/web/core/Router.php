@@ -1,13 +1,11 @@
 <?php
-    require_once(ROOT . DS . 'app' . DS . 'controllers' . DS . 'Home.php');
-
     class Router {
         public static function route($url) {
             $controller = (isset($url[0]) && $url[0] != '') ? ucwords($url[0]) : DEFAULT_CONTROLLER;
             $controller_name = $controller;
             array_shift($url);
 
-            $action = (isset($url[0]) && $url[0] != '') ? ($url[0] . 'Action') : 'indexAction';
+            $action = (isset($url[0]) && $url[0] != '') ? $url[0] . 'Action' : 'indexAction';
             $action_name = $controller;
             array_shift($url);
 

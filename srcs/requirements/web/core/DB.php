@@ -45,7 +45,11 @@
             return false;
         }
 
-        public function first() {
+        public function find($table, $where = []) {
+            return $this->action('SELECT *', $table, $where);
+        }
+
+        public function findFirst() {
             return $this->results()[0];
         }
 
@@ -100,6 +104,38 @@
                     $this->_error = true;
             }
             return $this;
+        }
+
+        public function read($table, $params=[]) {
+            $conditionString = '';
+            $bind = [];
+            $order = '';
+            $limit = '';
+
+            if (isset($params['conditions'])) {
+                if (is_array($params['conditions'])) {
+                    foreach ($params['conditions'] as $condition) {
+                        $conditionString .= ' ' . $condition . ' AND';
+                    }
+                    $conditionString = trim($conditionString);
+                    $conditionString = rtrim($conditionString, ' AND');
+                } else
+                    $conditionString = $params['conditions'];
+                if ($conditionString != '')
+                    $conditionString = ' WHERE ' . $conditionString;
+            }
+            if (array_key_exists('bind', $params))
+                $bind = $params['bind'];
+            if (array_key_exists('order', $params))
+                $order = ' ORDER BY ' . $params['order'];
+            if (array_key_exists('limit', $params))
+                $limit = ' LIMIT ' . $params['limit'];
+
+            $sql = "SELECT * FROM {$table}{$conditionString}{$order}{$limit}";
+            if ($this->query($sql, $bind))
+                if (!count($this->_results))
+                    return false;
+            return true;
         }
 
         public function results() {

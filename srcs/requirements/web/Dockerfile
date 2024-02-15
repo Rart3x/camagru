@@ -2,7 +2,7 @@ FROM php:8.2-apache
 
 ENV COMPOSER_ALLOW_SUPERUSER=1
 # Copy files from ./srcs into /var/www/html
-COPY ./srcs /var/www/html
+COPY . /var/www/html
 
 # Update and install required packages
 RUN apt-get update -qq && \
@@ -15,6 +15,9 @@ RUN apt-get update -qq && \
     apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 RUN docker-php-ext-install -j$(nproc) opcache pdo_mysql
+
+# Enable Apache mod_rewrite module
+RUN a2enmod rewrite
 
 # Create directories for Apache and set permissions
 RUN mkdir -p /var/run/apache2 \
@@ -30,7 +33,7 @@ ENV APACHE_RUN_DIR=/var/run/apache2 \
 RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
 
 # Copy the Apache configuration
-COPY ./srcs/config/apache-config.conf /etc/apache2/sites-available/000-default.conf
+COPY ./config/apache-config.conf /etc/apache2/sites-available/000-default.conf
 
 # Expose port  80
 EXPOSE  80
