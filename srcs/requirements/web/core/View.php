@@ -2,6 +2,7 @@
     class View {
         protected $_head, $_body, $_siteTitle, $_outputBuffer, $_layout = DEFAULT_LAYOUT;
         public function __construct() {
+        
         }
 
         public function content($type) {
@@ -20,9 +21,11 @@
             else
                 die('You must first run the start method.');
         }
+
         public function render($viewName) {
             $viewAry = explode('/', $viewName);
             $viewString = implode(DS, $viewAry);
+
             if (file_exists(ROOT . DS . 'app' . DS . 'views' . DS . $viewString . '.php')) {
                 include(ROOT . DS . 'app' . DS . 'views' . DS . $viewString . '.php');
                 // include(ROOT . DS . 'app' . DS . 'views' . DS . 'layouts' . DS . $this->_layout . '.php');
@@ -38,9 +41,11 @@
         public function siteTitle() {
             return $this->_siteTitle;
         }
+
         public function setSiteTitle($title) {
             $this->_siteTitle = $title;
         }
+
         public function setLayout($path) {
             $this->_layout = $path;
         }
