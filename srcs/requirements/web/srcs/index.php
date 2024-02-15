@@ -1,13 +1,24 @@
-<!-- <?php
-    // session_start();
+<?php
+    session_start();
 
-    // define('DS', DIRECTORY_SEPARATOR);
-    // define('ROOT', dirname(__FILE__));
+    define('DS', DIRECTORY_SEPARATOR);
+    define('ROOT', dirname(__FILE__));
 
-    // $url = isset($_SERVER['PATH_INFO']) ? explode('/', ltrim($_SERVER['PATH_INFO'], '/')) : [];
+    $url = isset($_SERVER['PATH_INFO']) ? explode('/', ltrim($_SERVER['PATH_INFO'], '/')) : [];
+    
+    require_once(ROOT . DS . 'core' . DS . 'Router.php');
+    require_once(ROOT . DS . 'core' . DS . 'boostrap.php');
+    require_once(ROOT . DS . 'core' . DS . 'DB.php');
 
-    // require_once(ROOT . DS . 'core' . DS . 'boostrap.php');
-?> -->
+    $db = DB::getInstance();
+    $sql = "CREATE TABLE IF NOT EXISTS `test` (
+        `name` varchar(255) NOT NULL,
+        `age` int(11) NOT NULL
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;";
+    $db->query($sql);
+    $sql = "INSERT INTO `test` (`name`, `age`) VALUES ('dams', '22');";
+    $db->query($sql);
+?>
 
 <!DOCTYPE html>
 <html data-theme="retro" lang="en">
@@ -19,7 +30,6 @@
 
         <link rel="stylesheet" href="style/main.css">
 
-        <!-- Tailwind CSS and DaisyUI CDN -->
         <link href="https://cdn.jsdelivr.net/npm/tailwindcss@^2.2.19/dist/tailwind.min.css" rel="stylesheet">
         <link href="https://cdn.jsdelivr.net/npm/daisyui@^1.3.6/dist/full.css" rel="stylesheet">
     </head>
@@ -57,7 +67,7 @@
             <p>right</p>
         </div>
 
-        <!-- <footer class="bg-gray-800 text-white p-4">
+         <!-- <footer class="bg-gray-800 text-white p-4">
             <p class="text-center">&copy; Rart3x</p>
             <p>footer</p>
         </footer> -->

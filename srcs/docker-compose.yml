@@ -7,6 +7,9 @@ services:
     build:
       context: ./requirements/web
       dockerfile: Dockerfile
+    depends_on:
+      - db
+      - phpmyadmin
     ports:
       - "1505:80"
     networks:
