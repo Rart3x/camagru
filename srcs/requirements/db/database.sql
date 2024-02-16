@@ -1,18 +1,43 @@
-CREATE TABLE Users(
-    userId INT PRIMARY KEY,
-    userName VARCHAR(255) NOT NULL,
-    userGallery BLOB,
-    userMail VARCHAR(255) NOT NULL,
-    userPass VARCHAR(255) NOT NULL,
-    notifOn BOOLEAN DEFAULT FALSE,
-    linkValidated BOOLEAN DEFAULT FALSE
-);
-
 CREATE TABLE Posts(
     postId INT PRIMARY KEY,
     postName VARCHAR(255) NOT NULL,
     postLikes INT DEFAULT  0,
-    postComments TEXT
+
+    userId INT,
+
+    postComments INT
+);
+
+CREATE TABLE Users(
+    userId INT PRIMARY KEY,
+    userName VARCHAR(255) NOT NULL,
+    userMail VARCHAR(255) NOT NULL,
+    userPass VARCHAR(255) NOT NULL,
+
+    notifOn BOOLEAN DEFAULT FALSE,
+    
+    linkValidated BOOLEAN DEFAULT FALSE
+);
+
+CREATE TABLE Comments(
+    commentId INT PRIMARY KEY,
+    commentText TEXT NOT NULL,
+    
+    postId INT,
+    userId INT, 
+
+    FOREIGN KEY (postId) REFERENCES Posts(postId),
+    FOREIGN KEY (userId) REFERENCES Users(userId)
+);
+
+CREATE TABLE PostComments (
+    postId INT, 
+    commentID INT,
+
+    PRIMARY KEY (postId, commentId),
+
+    FOREIGN KEY (postId) REFERENCES Posts(postId),
+    FOREIGN KEY (commentId) REFERENCES Comments(commentId)
 );
 
 CREATE TABLE Images(
@@ -20,14 +45,19 @@ CREATE TABLE Images(
     imageName VARCHAR(255) NOT NULL,
     imageDate DATE NOT NULL,
     imageLikes INT DEFAULT  0,
-    imageComment TEXT
+    
+    userId INT,
+
+    FOREIGN KEY (userId) REFERENCES Users(userId)
 );
 
-CREATE TABLE Comments(
-    commentId INT PRIMARY KEY,
-    imageId INT,
-    postId INT,
-    commentText TEXT NOT NULL,
+
+CREATE TABLE CommentImages (
+    imageId INT, 
+    commentID INT,
+
+    PRIMARY KEY (imageId, commentId),
+
     FOREIGN KEY (imageId) REFERENCES Images(imageId),
-    FOREIGN KEY (postId) REFERENCES Posts(postId)
+    FOREIGN KEY (commentId) REFERENCES Comments(commentId)
 );
