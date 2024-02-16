@@ -8,5 +8,4 @@
 
     require_once(ROOT . DS . 'core' . DS . 'boostrap.php');
 
-    // $db = DB::getInstance();
-?>
+    $db = DB::getInstance();
