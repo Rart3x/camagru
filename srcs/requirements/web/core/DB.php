@@ -49,7 +49,13 @@
             return $this->action('SELECT *', $table, $where);
         }
 
-        public function findFirst() {
+        public function findFirst($table, $params = []) {
+            if ($this->read($table, $params))
+                return $this->first();
+            return false;
+        }
+
+        public function first() {
             return $this->results()[0];
         }
 
