@@ -19,6 +19,16 @@ CREATE TABLE Users(
     linkValidated BOOLEAN DEFAULT FALSE
 );
 
+CREATE TABLE UserSessions(
+    userSessionId INT PRIMARY KEY,
+    userId INT,
+    
+    userSession VARCHAR(255) NOT NULL,
+    userAgent VARCHAR(255) NOT NULL,
+
+    FOREIGN KEY (userId) REFERENCES Users(userId)
+);
+
 CREATE TABLE Comments(
     commentId INT PRIMARY KEY,
     commentText TEXT NOT NULL,
