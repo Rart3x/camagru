@@ -9,4 +9,12 @@
             $this->_action = $action;
             $this->view = new View();
         }
+
+        protected function load($model) {
+            if (class_exists($model)) {
+                echo "Model $model exists";
+                $this->{$model.'Model'} = new $model(strtolower($model));
+            }
+        }
+
     }
