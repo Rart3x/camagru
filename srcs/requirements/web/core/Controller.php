@@ -1,5 +1,4 @@
 <?php
-    require_once(ROOT . DS . 'core' . DS . 'Application.php');
     class Controller extends Application {
         protected $_controller, $_action;
         public $view;
@@ -10,11 +9,8 @@
             $this->view = new View();
         }
 
-        protected function load($model) {
-            if (class_exists($model)) {
-                echo "Model $model exists";
-                $this->{$model.'Model'} = new $model(strtolower($model));
-            }
+        protected function load_model($model) {
+            if (class_exists($model))
+                $this->{$model} = new $model($model);
         }
-
     }

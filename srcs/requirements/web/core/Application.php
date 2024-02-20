@@ -20,13 +20,10 @@
         private function _unregister_globals() {
             if (ini_get('register_globals')) {
                 $globalsArray = ['_SESSION', '_COOKIE', '_POST', '_GET', '_REQUEST', '_SERVER', '_ENV', '_FILES'];
-                foreach ($globalsArray as $global) {
-                    foreach ($GLOBALS[$global] as $key => $value) {
-                        if ($GLOBALS[$key] === $value) {
+                foreach ($globalsArray as $global)
+                    foreach ($GLOBALS[$global] as $key => $value)
+                        if ($GLOBALS[$key] === $value)
                             unset($GLOBALS[$key]);
-                        }
-                    }
-                }
             }
         }
     }

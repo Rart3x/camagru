@@ -101,6 +101,7 @@
         protected function _setTableColumns() {
             $columns = $this->get_columns();
             foreach ($columns as $column) {
+                $columnName = $column->Field;
                 $this->_columnNames[] = $column->Field;
                 $this->{$columnName} = null;
             }

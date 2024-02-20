@@ -6,6 +6,7 @@
 
     define('SITE_TITLE', 'Camagru');
     define('SROOT', '/');
+    define('PROOT', '/');
 
     define('DB_HOST', 'db');
     define('DB_NAME', 'camagru');

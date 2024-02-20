@@ -9,14 +9,17 @@
         $searchPaths = [
             ROOT . DS . "core" . DS . $className . ".php",
             ROOT . DS . "app" . DS . "controllers" . DS . $className . ".php",
+            ROOT . DS . "app" . DS . "models" . DS . $className . ".php",
             ROOT . DS . "app" . DS . "views" . DS . $className . ".php",
-            ROOT . DS . "app" . DS . "models" . DS . $className . ".php"
         ];
     
         foreach($searchPaths as $i)
             if(file_exists($i))
                 require_once($i);
     });
+
+    require_once(ROOT . DS . 'app' . DS . 'models' . DS . 'Users.php');
+
 
     session_start();
 
