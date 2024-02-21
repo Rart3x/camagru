@@ -6,9 +6,6 @@
         }
 
         public function indexAction() {
-            if (isset($_POST['userName']))
-                $user = $this->Users->findByUsername($_POST['userName']);
             $this->view->render('registration');
-            dnd($user);
         }
     }

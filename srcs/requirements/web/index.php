@@ -20,7 +20,6 @@
 
     require_once(ROOT . DS . 'app' . DS . 'models' . DS . 'Users.php');
 
-
     session_start();
 
     $url = isset($_SERVER['REQUEST_URI']) ? explode('/', ltrim($_SERVER['REQUEST_URI'], '/')) : [];
@@ -28,3 +27,4 @@
     Router::route($url);
 
     $db = DB::getInstance();
+    $db->query('INSERT INTO `Users` (`userId`, `userName`, `userMail`, `userPass`, `notifOn`, `linkValidated`) VALUES (1, "kramjatt", "kramjatt@42.fr", "test", 0, 0);');

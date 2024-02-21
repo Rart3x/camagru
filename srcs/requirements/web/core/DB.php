@@ -56,7 +56,7 @@
         }
 
         public function first() {
-            return $this->results()[0];
+            return (!empty($this->_results)) ? $this->_results[0] : [];
         }
 
         public function count() {

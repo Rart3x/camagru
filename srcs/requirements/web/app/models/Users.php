@@ -36,9 +36,28 @@
                 
                 Cookie::set($this->_cookieName, $hash, REMEMBER_ME_COOKIE_EXPIRY);
                 
-                $fields = ['session'=>$hash, 'userAgent'=>$user_agent, 'userId'=>$this->id];
+                $fields = ['userSession'=>$hash, 'userAgent'=>$user_agent, 'userId'=>$this->id];
                 $this->_db->query("DELETE FROM UserSessions WHERE userId = ? AND userAgent = ?", [$this->id, $user_agent]);
                 $this->_db->insert('UserSessions', $fields);
             } 
+        }
+
+        public static function loginUserFromCookie() {
+            $userSession = UserSessions::getFromCookie();
+            if ($userSession->userId != '')
+                $user = new self((int)$userSession->userId);
+            if ($user)
+                $user->login();
+            return $user;
+        }
+
+        public function logout() {
+            $user_agent = Session::uagent_no_version();
+            $this->_db->query("DELETE FROM UserSessions WHERE userId = ? AND userAgent ?", [$this->id, $user_agent]);
+            Session::delete(CURRENT_USER_SESSION_NAME);
+            if (Cookie::exists(REMEMBER_ME_COOKIE_NAME))
+                Cookie::delete(REMEMBER_ME_COOKIE_NAME);
+            self::$currentLoggedInUser = null;
+            return true;
         }
     }
