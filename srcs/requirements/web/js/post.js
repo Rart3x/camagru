@@ -1,4 +1,3 @@
-// Function to add posts to the container
 function addPosts(times) {
     const container = document.querySelector('.flex.flex-col.w-full.h-full.text-gray-900.text-xl.border-4.border-gray-900.border-dashed');
     for (let i =  0; i < times; i++) {

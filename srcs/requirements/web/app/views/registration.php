@@ -29,7 +29,7 @@
 
                     <button class="transform rounded-sm bg-indigo-600 py-2 font-bold duration-300 hover:bg-indigo-400" type="submit"> LOG IN </button>
                 
-                    <p class="text-center text-lg"> Already registered ? <a href="#" class="font-medium text-indigo-500 underline-offset-4 hover:underline">Log in</a > </p>
+                    <p class="text-center text-lg"> Already registered ? <a href="<?=PROOT?>login" class="font-medium text-indigo-500 underline-offset-4 hover:underline">Log in</a > </p>
                 </form>
             </section>
         </main>
