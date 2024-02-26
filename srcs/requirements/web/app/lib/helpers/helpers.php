@@ -1,4 +1,8 @@
 <?php
+    function currentUser() {
+        return User::currentLoggedInUser();
+    }
+
     function dnd($data) {
         echo '<pre>';
         var_dump($data);

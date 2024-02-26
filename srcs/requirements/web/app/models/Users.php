@@ -23,6 +23,14 @@
            }
         }
 
+        public static function currentLoggedInUser() {
+            if (!isset(self::$currentLoggedInUser) && Session::exists(CURRENT_USER_SESSION_NAME)) {
+                $U = new Users((int)Session::get(CURRENT_USER_SESSION_NAME));
+                self::$currentLoggedInUser = $U;
+            }
+            return self::$currentLoggedInUser;
+        }
+
         public function findByUsername($username) {
             return $this->findFirst(['conditions'=>"userName = ?", 'bind'=>[$username]]);
         }
@@ -37,6 +45,7 @@
                 Cookie::set($this->_cookieName, $hash, REMEMBER_ME_COOKIE_EXPIRY);
                 
                 $fields = ['userSession'=>$hash, 'userAgent'=>$user_agent, 'userId'=>$this->id];
+
                 $this->_db->query("DELETE FROM UserSessions WHERE userId = ? AND userAgent = ?", [$this->id, $user_agent]);
                 $this->_db->insert('UserSessions', $fields);
             } 
@@ -54,9 +63,12 @@
         public function logout() {
             $user_agent = Session::uagent_no_version();
             $this->_db->query("DELETE FROM UserSessions WHERE userId = ? AND userAgent ?", [$this->id, $user_agent]);
+
             Session::delete(CURRENT_USER_SESSION_NAME);
+
             if (Cookie::exists(REMEMBER_ME_COOKIE_NAME))
                 Cookie::delete(REMEMBER_ME_COOKIE_NAME);
+
             self::$currentLoggedInUser = null;
             return true;
         }

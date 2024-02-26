@@ -5,7 +5,7 @@
             $this->load_model('Users');
         }
 
-        public function indexAction() {
+        public function loginAction() {
             $validation = new Validate();
 
             if ($_POST) {
@@ -33,5 +33,11 @@
             }
             $this->view->displayErrors = $validation->displayErrors();
             $this->view->render('login');
+        }
+
+        public function logoutAction() {
+            if (currentUser())
+                currentUser()->logout();
+            Router::redirect('login');
         }
     }
