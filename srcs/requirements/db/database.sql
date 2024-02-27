@@ -1,5 +1,5 @@
 CREATE TABLE Posts(
-    postId INT PRIMARY KEY,
+    postId INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     postName VARCHAR(255) NOT NULL,
     postLikes INT DEFAULT  0,
 
@@ -9,7 +9,7 @@ CREATE TABLE Posts(
 );
 
 CREATE TABLE Users(
-    userId INT PRIMARY KEY,
+    userId INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     userName VARCHAR(255) NOT NULL,
     userMail VARCHAR(255) NOT NULL,
     userPass VARCHAR(255) NOT NULL,
@@ -20,7 +20,7 @@ CREATE TABLE Users(
 );
 
 CREATE TABLE UserSessions(
-    userSessionId INT PRIMARY KEY,
+    userSessionId INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     userId INT,
     
     userSession VARCHAR(255) NOT NULL,
@@ -30,7 +30,7 @@ CREATE TABLE UserSessions(
 );
 
 CREATE TABLE Comments(
-    commentId INT PRIMARY KEY,
+    commentId INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     commentText TEXT NOT NULL,
     
     postId INT,
@@ -51,7 +51,7 @@ CREATE TABLE PostComments (
 );
 
 CREATE TABLE Images(
-    imageId INT PRIMARY KEY,
+    imageId INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     imageName VARCHAR(255) NOT NULL,
     imageDate DATE NOT NULL,
     imageLikes INT DEFAULT  0,
