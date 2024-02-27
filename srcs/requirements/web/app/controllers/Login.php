@@ -26,7 +26,7 @@
                     
                     if ($user && Input::get('password') == $user->userPass) { // Need to hash
                         $remember = (isset($_POST['remember_me']) && Input::get('remember_me')) ? true : false;
-                        $user->login($remember);
+                        $user->login($remember, $_POST['userName']);
                         
                         Router::redirect('home');
                     } else

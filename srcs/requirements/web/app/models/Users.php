@@ -35,7 +35,7 @@
             return $this->findFirst(['conditions' => "userName = ?", 'bind' => [$username]]);
         }
 
-        public function login($rememberMe = false) {
+        public function login($rememberMe = false, $username) {
             Session::set($this->_sessionName, $this->id);
             
             if ($rememberMe) {
@@ -43,14 +43,13 @@
                 $user_agent = Session::uagent_no_version();
                 
                 Cookie::set($this->_cookieName, $hash, REMEMBER_ME_COOKIE_EXPIRY);
-                
-                $fields = ['userId' => $this->id, 'userSession' => $hash, 'userAgent' => $user_agent];
 
-                echo "BEFORE DELETING";
+                $U = $this->findFirst(['conditions' => "userName = ?", 'bind' => [$username]]);
+                
+                $fields = ['userId' => $U->userId, 'userSession' => $hash, 'userAgent' => $user_agent];
+
                 $this->_db->query("DELETE FROM UserSessions WHERE userId = ? AND userAgent = ?", [$this->id, $user_agent]);
-                echo "AFTER DELETING";
                 $this->_db->insert('UserSessions', $fields);
-                echo "AFTER INSERT";
             } 
         }
 
