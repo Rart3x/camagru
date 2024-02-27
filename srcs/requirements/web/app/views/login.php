@@ -37,7 +37,7 @@
                 
                 </form>
             
-                <p class="text-center text-lg"> No account? <a href="<?=PROOT?>registration" class="font-medium text-indigo-500 underline-offset-4 hover:underline" >Create One</a > </p>
+                <p class="text-center text-lg"> No account? <a href="<?=PROOT?>register" class="font-medium text-indigo-500 underline-offset-4 hover:underline" >Create One</a > </p>
             </section>
         </main>
     </body>

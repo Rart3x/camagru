@@ -1,6 +1,6 @@
 <?php
     function currentUser() {
-        return User::currentLoggedInUser();
+        return Users::currentLoggedInUser();
     }
 
     function dnd($data) {
