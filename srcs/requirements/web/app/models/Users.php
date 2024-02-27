@@ -48,7 +48,7 @@
                 
                 $fields = ['userId' => $U->userId, 'userSession' => $hash, 'userAgent' => $user_agent];
 
-                $this->_db->query("DELETE FROM UserSessions WHERE userId = ? AND userAgent = ?", [$this->id, $user_agent]);
+                $this->_db->query("DELETE FROM UserSessions WHERE userId = ? AND userAgent = ?", [$U->userId, $user_agent]);
                 $this->_db->insert('UserSessions', $fields);
             } 
         }
