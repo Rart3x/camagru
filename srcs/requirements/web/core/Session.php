@@ -18,8 +18,7 @@
             return $_SESSION[$name] = $value;
         }
 
-
-        public static function uagent_no_version() {
+        public static function userAgent() {
             $uagent = $_SERVER['HTTP_USER_AGENT'];
             
             $regx = '/\/[a-zA-Z0-9.]+/';

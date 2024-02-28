@@ -13,6 +13,6 @@
     define('DB_USER', 'admin');
     define('DB_PASSWORD', 'admin');
 
-    define('CURRENT_USER_SESSION_NAME', 'asdasAQesadasasdasdasQEASD'); // session name for logged in users
-    define('REMEMBER_ME_COOKIE_NAME', 'JAJSDJASDAJSCNAKSND1441'); // cookie name for logged in users
-    define('REMEMBER_ME_COOKIE_EXPIRY', '60400');
+    define('CURRENT_USER_SESSION_NAME', 'CamagruSession');
+    define('REMEMBER_ME_COOKIE_NAME', 'CamagruCookie');
+    define('REMEMBER_ME_COOKIE_EXPIRY', '2592000');

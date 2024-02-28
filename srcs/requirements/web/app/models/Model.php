@@ -54,7 +54,7 @@
         }
 
         public function findById($id) {
-            return $this->_db->findFirst(['conditions'=>"id = ?", 'bind'=> [$id]]);
+            return $this->_db->findFirst(['conditions' => "id = ?", 'bind' => [$id]]);
         }
 
         public function findFirst($params = []) {

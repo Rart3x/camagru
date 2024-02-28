@@ -1,7 +1,6 @@
 <?php
     class Users extends Model {
-        private $_isLoggedIn, $_sessionName, $_cookieName;
-        
+        private $_isLoggedIn, $_sessionName, $_cookieName, $_userName;
         public static $currentLoggedInUser = null;
 
         public function __construct($user='') {
@@ -24,10 +23,8 @@
         }
 
         public static function currentLoggedInUser() {
-            if (!isset(self::$currentLoggedInUser) && Session::exists(CURRENT_USER_SESSION_NAME)) {
-                $U = new Users((int)Session::get(CURRENT_USER_SESSION_NAME));
-                self::$currentLoggedInUser = $U;
-            }
+            $U = new Users((int)Session::get(CURRENT_USER_SESSION_NAME));
+            self::$currentLoggedInUser = $U;
             return self::$currentLoggedInUser;
         }
 
@@ -37,10 +34,11 @@
 
         public function login($rememberMe = false, $username) {
             Session::set($this->_sessionName, $this->id);
-            
+            $this->_userName = $username;
+
             if ($rememberMe) {
                 $hash = md5(uniqid() + rand(0, 100));
-                $user_agent = Session::uagent_no_version();
+                $user_agent = Session::userAgent();
                 
                 Cookie::set($this->_cookieName, $hash, REMEMBER_ME_COOKIE_EXPIRY);
 
@@ -65,8 +63,13 @@
         }
 
         public function logout() {
-            $user_agent = Session::uagent_no_version();
-            $this->_db->query("DELETE FROM UserSessions WHERE userId = ? AND userAgent ?", [$this->id, $user_agent]);
+            $user_agent = Session::userAgent();
+
+            $U = $this->findFirst(['conditions' => "userName = ?", 'bind' => [$this->_userName]]);
+
+            echo $this->_userName . " : " . $U->userId;
+
+            $this->_db->query("DELETE FROM UserSessions WHERE userId = ? AND userAgent ?", [$U->userId, $user_agent]);
 
             Session::delete(CURRENT_USER_SESSION_NAME);
 
