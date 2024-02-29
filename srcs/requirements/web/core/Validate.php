@@ -66,7 +66,7 @@
 
                             case 'valid_email':
                                 if (!filter_var($value, FILTER_VALIDATE_EMAIL))
-                                    $this->addError(['error: {$display} must be a valid email adress.', $item]);
+                                    $this->addError(["error: {$display} must be a valid email adress.", $item]);
                             break;
                         }
                     }
