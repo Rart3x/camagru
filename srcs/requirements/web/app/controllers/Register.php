@@ -14,28 +14,33 @@
                 $validation->check($_POST, [
                     'userName' => [
                         'display' => 'Username',
-                        'required' => true
-                    ],
-                    'email' => [
-                        'display' => 'E-mail',
                         'required' => true,
-                        'valid_email' => true
+                        'unique' => 'Users'
                     ],
-                    'password' => [
+                    'userMail' => [
+                        'display' => 'Email',
+                        'required' => true,
+                        'valid_email' => true,
+                        'unique' => 'Users'
+                    ],
+                    'userPass' => [
                         'display' => 'Password',
-                        'required'=> true
+                        'required' => true,
+                        'min' => 6
                     ],
                     'confirmPass' => [
                         'display' => 'Confirmation Password',
-                        'required'=> true
+                        'required'=> true,
+                        'matches' => 'userPass',
+                        'min' => 6
                     ]
                 ]);
 
                 if ($validation->passed()) {
-                    if ($_POST['password'] == $_POST['confirmPass']) {
+                    if ($_POST['userPass'] == $_POST['confirmPass']) {
                         $username = $_POST['userName'];
-                        $email = $_POST['email'];
-                        $password = $_POST['password'];
+                        $email = $_POST['userMail'];
+                        $password = $_POST['userPass'];
                         
                         $sql = "INSERT INTO Users (userName, userMail, userPass, notifOn, linkValidated) VALUES (?, ?, ?, ?, ?)";
                         $params = [$username, $email, $password, 0, 0];

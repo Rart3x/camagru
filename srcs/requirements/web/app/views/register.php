@@ -24,11 +24,11 @@
                     </div>
 
                     <div class="w-full transform border-b-2 bg-transparent text-lg duration-300 focus-within:border-indigo-500" >
-                        <input type="text" name="email" placeholder="E-mail" class="w-full border-none bg-transparent outline-none placeholder:italic focus:outline-none" />
+                        <input type="text" name="userMail" placeholder="E-mail" class="w-full border-none bg-transparent outline-none placeholder:italic focus:outline-none" />
                     </div>
                 
                     <div class="w-full transform border-b-2 bg-transparent text-lg duration-300 focus-within:border-indigo-500" >
-                        <input type="password" name="password" placeholder="Password" class="w-full border-none bg-transparent outline-none placeholder:italic focus:outline-none" />
+                        <input type="password" name="userPass" placeholder="Password" class="w-full border-none bg-transparent outline-none placeholder:italic focus:outline-none" />
                     </div>
 
                     <div class="w-full transform border-b-2 bg-transparent text-lg duration-300 focus-within:border-indigo-500" >

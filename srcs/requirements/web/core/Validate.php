@@ -50,7 +50,7 @@
                                 $check = $this->_db->query("SELECT {$item} FROM {$rule_value} WHERE {$item} = ?", [$value]);
 
                                 if($check->count())
-                                    $this->addError(["error: {$display} already exists.", $item]);
+                                    $this->addError(["error: {$display} is already use.", $item]);
                             break;
 
                             case 'unique_update':
@@ -61,7 +61,7 @@
                                 $query = $this->_db->query("SELECT * FROM {$table} WHERE id != ? AND {$item} = ?", [$id, $value]);
 
                                 if($query->count())
-                                    $this->addError(["error: {$display} already exists.", $item]);
+                                    $this->addError(["error: {$display} is already use.", $item]);
                             break;
 
                             case 'valid_email':
