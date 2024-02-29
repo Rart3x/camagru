@@ -24,7 +24,7 @@
                 if ($validation->passed()) {
                     $user = $this->Users->findByUsername($_POST['userName']);
                     
-                    if ($user && Input::get('password') == $user->userPass) { // Need to hash
+                    if ($user && Input::get('password') == $user->userPass) {
                         $remember = (isset($_POST['remember_me']) && Input::get('remember_me')) ? true : false;
                         $user->login($remember, $_POST['userName']);
                         
