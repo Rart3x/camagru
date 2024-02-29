@@ -5,6 +5,12 @@ services:
     hostname: web
     image: web
     build:
+      args:
+        EMAIL: ${EMAIL}
+        EMAIL_PASSWORD: ${EMAIL_PASSWORD}
+        MAIL_NAME: ${MAIL_NAME}
+        SMTP_DOMAIN: ${SMTP_DOMAIN}
+        SMTP_PORT: ${SMTP_PORT}
       context: ./requirements/web
       dockerfile: Dockerfile
     depends_on:
@@ -54,6 +60,20 @@ services:
     restart: on-failure
     volumes:
       - phpmyadmin_data:/var/www/html
+
+#------------------------------SMTP------------------------------#
+  smtp:
+    container_name: smtp
+    build:
+      context: ./requirements/smtp
+      args:
+        EMAIL: ${EMAIL}
+        EMAIL_PASSWORD: ${EMAIL_PASSWORD}
+        MAIL_NAME: ${MAIL_NAME}
+        SMTP_DOMAIN: ${SMTP_DOMAIN}
+        SMTP_PORT: ${SMTP_PORT}
+    ports:
+      - ${PORT}:25  
 
 #------------------------------NETWORKS------------------------------#
 networks:

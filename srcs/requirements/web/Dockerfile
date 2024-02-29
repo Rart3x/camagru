@@ -1,6 +1,7 @@
 FROM php:8.2-apache
 
 ENV COMPOSER_ALLOW_SUPERUSER=1
+
 # Copy files from ./srcs into /var/www/html
 COPY . /var/www/html
 
@@ -30,9 +31,9 @@ ENV APACHE_RUN_DIR=/var/run/apache2 \
     APACHE_LOG_DIR=/var/log/apache2
 
 # Define the server name in the Apache configuration
-RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
+RUN echo "Servername localhost" >> /etc/apache2/apache2.conf
 
-# Copy the Apache configuration
+# Copy the Apache && Postfix configurations
 COPY ./config/apache-config.conf /etc/apache2/sites-available/000-default.conf
 
 # Expose port  80
